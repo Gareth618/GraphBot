@@ -59,8 +59,8 @@ Bot-ul va converti singur grafurile în poze:
     }
   ]
   edges: [
-    u: int
-    v: int
+    node1: int
+    node2: int
     text: string
     color: string
   ]

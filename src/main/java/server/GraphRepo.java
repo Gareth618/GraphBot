@@ -25,18 +25,14 @@ public class GraphRepo {
             .createNamedQuery("GraphJSON.findAll")
             .getResultList()
             .stream()
-            .map(json -> {
-                Graph graph;
-                try {
-                    final GraphJSON graphJSON = (GraphJSON) json;
-                    graph = om.readValue(graphJSON.getJSON(), Graph.class);
-                    graph.setId(graphJSON.getId());
-                }
-                catch (final Exception exc) {
-                    graph = new Graph();
-                }
-                return graph;
-            })
+            .map(graphJSON -> ((GraphJSON) graphJSON).toGraph())
             .toList();
+    }
+
+    public Graph findById(int id) {
+        return ((GraphJSON) em
+            .createNamedQuery("GraphJSON.findById")
+            .setParameter("id", id)
+            .getSingleResult()).toGraph();
     }
 }

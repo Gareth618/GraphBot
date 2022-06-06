@@ -3,7 +3,6 @@ package gui;
 import model.Graph;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class App extends JFrame {
     private Graph graph;

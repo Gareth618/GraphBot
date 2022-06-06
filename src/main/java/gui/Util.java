@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Util {
     public static void exportPNG(Component component, String path) throws IOException {
@@ -22,7 +23,7 @@ public class Util {
         Document document = domImpl.createDocument("http://www.w3.org/2000/svg", "svg", null);
         SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
         drawingPanel.paintGraph(svgGenerator);
-        Writer out = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
+        Writer out = new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8);
         svgGenerator.stream(out, true);
     }
 }

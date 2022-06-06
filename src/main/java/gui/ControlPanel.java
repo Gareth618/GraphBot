@@ -25,6 +25,7 @@ public class ControlPanel extends JPanel {
         add(saveGraph);
         add(newGraph);
         app.pack();
+
         exportSVG.addActionListener(this::onExportSVGClicked);
         exportPNG.addActionListener(this::onExportPNGClicked);
         exportTIKZ.addActionListener(this::onExportTIKZClicked);

@@ -1,16 +1,30 @@
 package model;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Graph implements Serializable {
+    private static final ObjectMapper om = new ObjectMapper();
+
     private int id;
     private boolean directed = false;
     private List<Node> nodes = new ArrayList<>();
     private List<Edge> edges = new ArrayList<>();
 
     public Graph() { }
+
+    public Graph duplicate() {
+        String json;
+        try { json = om.writeValueAsString(this); }
+        catch (final Exception exc) { json = ""; }
+        Graph cloned;
+        try { cloned = om.readValue(json, Graph.class); }
+        catch (final Exception exc) { cloned = null; }
+        return cloned;
+    }
 
     public int getId() {
         return id;
@@ -20,7 +34,7 @@ public class Graph implements Serializable {
         this.id = id;
     }
 
-    public boolean isDirected() {
+    public boolean getDirected() {
         return directed;
     }
 

@@ -19,8 +19,10 @@ public class DFS extends Algorithm {
         adj = new ArrayList<>();
         for (int i = 0; i < n; i++)
             adj.add(new ArrayList<>());
-        for (final Edge edge : graph.getEdges())
+        for (final Edge edge : graph.getEdges()) {
             adj.get(edge.getNode1()).add(edge.getNode2());
+            adj.get(edge.getNode2()).add(edge.getNode1());
+        }
         visited = new boolean[n];
     }
 

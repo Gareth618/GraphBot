@@ -48,7 +48,9 @@ public class DrawingPanel extends JPanel {
                             selectedNode = -1;
                         }
                         else {
-                            Edge edge = new Edge(selectedNode, i);
+                            int node1 = Math.min(selectedNode, i);
+                            int node2 = Math.max(selectedNode, i);
+                            Edge edge = new Edge(node1, node2);
                             if (!app.getGraph().getEdges().contains(edge)) {
                                 app.getGraph().getEdges().add(edge);
                             }

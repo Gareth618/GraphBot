@@ -10,7 +10,6 @@ public class Graph implements Serializable {
     private static final ObjectMapper om = new ObjectMapper();
 
     private int id;
-    private boolean directed = false;
     private List<Node> nodes = new ArrayList<>();
     private List<Edge> edges = new ArrayList<>();
 
@@ -32,14 +31,6 @@ public class Graph implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public boolean getDirected() {
-        return directed;
-    }
-
-    public void setDirected(boolean directed) {
-        this.directed = directed;
     }
 
     public List<Node> getNodes() {

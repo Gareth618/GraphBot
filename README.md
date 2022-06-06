@@ -7,7 +7,7 @@ Dream Team:
 
 Aplicația este compusă din trei module principale:
 
-1. **aplicație grafică**: Aici putem desena grafuri care apoi să fie stocate în baza de date sau să fie exportate în format SVG, PNG sau TIKZ.
+1. **aplicație grafică**: Aici putem desena grafuri care apoi să fie stocate în baza de date sau să fie exportate în format PNG, SVG sau TIKZ.
 2. **bot discord**: Aici putem selecta un graf din baza de date pe care mai apoi să rulăm diverși algoritmi.
 3. **server spring**: El se ocupă de rularea algoritmilor pe grafuri și de transformarea acestora în poze pentru discord, oferind API-uri pentru celelalte două module.
 
@@ -19,9 +19,8 @@ Aplicația este compusă din trei module principale:
 - Dând click într-un punct ocupat de un nod, acesta va fi (de)selectat pentru crearea ulterioară a unei muchii.
 - Când avem două noduri selectate, se va crea o muchie de la primul la al doilea și se vor deselecta.
 - Dacă muchia exista deja, atunci se va completa de la tastatură textul aferent muchiei.
-- Când apăsăm pe *backspace* se șterge ultimul nod creat.
 
-În dreapta-sus avem trei butoane pentru cele trei tipuri de export-uri. Fișierele rezultate vor fi salvate în folder-ul `Downloads`. În dreapta-jos avem un buton pentru selectarea orientării grafului, unul pentru salvarea grafului în baza de date și unul pentru crearea unui graf nou. Butonul `save` face actualizări pe același graf până la apăsarea lui `new`. Eventual, la apăsarea lui `new` va apărea un prompt care să ne anunțe că avem modificări nesalvate.
+În dreapta-sus avem trei butoane pentru cele trei tipuri de export-uri. Fișierele rezultate vor fi salvate în folder-ul `Downloads`. În dreapta-jos avem un buton pentru salvarea grafului în baza de date și unul pentru crearea unui graf nou. Când apăsăm `save` resetăm totodată graful.
 
 ## 🤖 Bot-ul pentru Discord
 
@@ -30,13 +29,11 @@ Comenzile încep cu `$ spațiu` și sunt *case insensitive*:
 - `select graph`: Selectează un graf din baza de date pentru a lucra cu el.
     - ⬅️ 🆗 ➡️
     - `no graphs to choose from`
-    - `user ${nickname} chose graph ${id} + poză`
+    - `user ${nickname} chose graph ${id}` + poză
 - `run ${alg}`: Rulează algoritmul dat pe ultimul graf selectat și afișează pașii acestuia sub forma unui șir de poze.
-    - `dfs s=1`, `bfs s=1`, `kosaraju`, `prim`, `biconnectivity`, `flow s=1 t=${n}`:
-    - `step ${i} of ${n} + poză`
+    - `dfs s=1`, `bfs s=1`, `kosaraju`, `prim`, `biconnectivity`
+    - `step ${i} of ${n}` + poză
     - ⏪ ⬅️ ➡️ ⏩
-    - `source and sink are not different`
-    - `the graph is not (un)directed`
     - `no graph selected`
 
 ## 🗄️ Server-ul Spring
@@ -52,20 +49,18 @@ Bot-ul va converti singur grafurile în poze:
 ```
 {
   id: int
-  directed: bool
   nodes: [
     {
       x: int
       y: int
-      text: string
-      color: string
+      color: enum
     }
   ]
   edges: [
     node1: int
     node2: int
     text: string
-    color: string
+    color: enum
   ]
 }
 ```

@@ -1,5 +1,7 @@
 package gui;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,17 +9,18 @@ import java.io.IOException;
 
 public class ControlPanel extends JPanel {
     private final App app;
-    private final JButton exportPNG = new JButton("Export as PNG");
-    private final JButton exportSVG = new JButton("Export as SVG");
-    private final JButton exportTIKZ = new JButton("Export as TIKZ");
-    private final JButton saveGraph = new JButton("Save");
-    private final JButton newGraph = new JButton("New");
 
     public ControlPanel(App app) {
         this.app = app;
         setSize(200, 400);
         setLocation(400, 0);
         setLayout(new GridLayout(5, 1));
+
+        JButton exportPNG = new JButton("Export as PNG");
+        JButton exportSVG = new JButton("Export as SVG");
+        JButton exportTIKZ = new JButton("Export as TIKZ");
+        JButton saveGraph = new JButton("Save");
+        JButton newGraph = new JButton("New");
 
         add(exportPNG);
         add(exportSVG);
@@ -58,7 +61,12 @@ public class ControlPanel extends JPanel {
     }
 
     private void onSaveGraphClicked(ActionEvent e) {
-
+        try {
+            Util.saveGraph(app.getGraph(), "http://localhost:8000/api/graphs");
+            System.out.println("Graph " + app.getGraph().getId() + " saved in the database");
+        } catch (JsonProcessingException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void onNewGraphClicked(ActionEvent e) {

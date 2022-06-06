@@ -39,15 +39,13 @@ public class DFS extends Algorithm {
         visited[node] = true;
         for (final int neighbor : adj.get(node))
             if (!visited[neighbor]) {
-                // frame = makeFrame();
-                // frame.getEdges().get(frame.getEdges().indexOf(new Edge(node, neighbor))).setColor(Color.YELLOW);
-                // if (frame.getDirected())
-                //     frame.getEdges().get(frame.getEdges().indexOf(new Edge(neighbor, node))).setColor(Color.YELLOW);
+                final int node1 = Math.min(node, neighbor);
+                final int node2 = Math.max(node, neighbor);
+                frame = makeFrame();
+                frame.getEdges().get(frame.getEdges().indexOf(new Edge(node1, node2))).setColor(Color.YELLOW);
                 dfs(neighbor);
-                // frame = makeFrame();
-                // frame.getEdges().get(frame.getEdges().indexOf(new Edge(neighbor, node))).setColor(Color.BLACK);
-                // if (frame.getDirected())
-                //     frame.getEdges().get(frame.getEdges().indexOf(new Edge(node, neighbor))).setColor(Color.BLACK);
+                frame = makeFrame();
+                frame.getEdges().get(frame.getEdges().indexOf(new Edge(node1, node2))).setColor(Color.BLACK);
             }
         frame = makeFrame();
         frame.getNodes().get(node).setColor(Color.RED);

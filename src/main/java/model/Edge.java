@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Edge implements Serializable {
     private int node1;
@@ -51,10 +50,7 @@ public class Edge implements Serializable {
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Edge)) return false;
-        Edge edge = (Edge) obj;
-        return node1 == edge.node1
-            && node2 == edge.node2
-            && Objects.equals(text, edge.text)
-            && color == edge.color;
+        final Edge edge = (Edge) obj;
+        return node1 == edge.node1 && node2 == edge.node2;
     }
 }

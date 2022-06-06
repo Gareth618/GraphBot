@@ -19,6 +19,7 @@ Aplicația este compusă din trei module principale:
 - Dând click într-un punct ocupat de un nod, acesta va fi (de)selectat pentru crearea ulterioară a unei muchii.
 - Când avem două noduri selectate, se va crea o muchie de la primul la al doilea și se vor deselecta.
 - Dacă muchia exista deja, atunci se va completa de la tastatură textul aferent muchiei.
+- Când apăsăm pe *backspace* se șterge ultimul nod creat.
 
 În dreapta-sus avem trei butoane pentru cele trei tipuri de export-uri. Fișierele rezultate vor fi salvate în folder-ul `Downloads`. În dreapta-jos avem un buton pentru selectarea orientării grafului, unul pentru salvarea grafului în baza de date și unul pentru crearea unui graf nou. Butonul `save` face actualizări pe același graf până la apăsarea lui `new`. Eventual, la apăsarea lui `new` va apărea un prompt care să ne anunțe că avem modificări nesalvate.
 
@@ -31,7 +32,7 @@ Comenzile încep cu `$ spațiu` și sunt *case insensitive*:
     - `no graphs to choose from`
     - `user ${nickname} chose graph ${id} + poză`
 - `run ${alg}`: Rulează algoritmul dat pe ultimul graf selectat și afișează pașii acestuia sub forma unui șir de poze.
-    - `dfs s=1`, `bfs s=1`, `dijkstra s=1`, `kosaraju`, `prim`, `biconnectivity`, `flow s=1 t=${n}`:
+    - `dfs s=1`, `bfs s=1`, `kosaraju`, `prim`, `biconnectivity`, `flow s=1 t=${n}`:
     - `step ${i} of ${n} + poză`
     - ⏪ ⬅️ ➡️ ⏩
     - `source and sink are not different`

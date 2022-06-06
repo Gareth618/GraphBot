@@ -58,7 +58,7 @@ public class DrawingPanel extends JPanel {
             }
 
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 int x1 = e.getX();
                 int y1 = e.getY();
                 selectNode(x1, y1);
@@ -98,7 +98,7 @@ public class DrawingPanel extends JPanel {
             g2d.setColor(Color.BLACK.getColor());
             g2d.setFont(new Font("Monospaced", Font.BOLD, 20));
             int w = g2d.getFontMetrics().stringWidth(String.valueOf(i));
-            g2d.drawString(String.valueOf(i), x - w / 2, y + 7);
+            g2d.drawString(String.valueOf(i + 1), x - w / 2, y + 7);
         }
     }
 }

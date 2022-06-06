@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class Node implements Serializable {
     private int x;
     private int y;
-    private String text = "";
     private Color color = Color.WHITE;
 
     public Node() { }
@@ -29,14 +28,6 @@ public class Node implements Serializable {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public Color getColor() {

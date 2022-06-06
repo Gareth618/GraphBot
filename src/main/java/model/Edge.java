@@ -49,17 +49,12 @@ public class Edge implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Edge)) return false;
-        Edge edge = (Edge) o;
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Edge)) return false;
+        Edge edge = (Edge) obj;
         return node1 == edge.node1
-                && node2 == edge.node2
-                && Objects.equals(text, edge.text)
-                && color == edge.color;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(node1, node2, text, color);
+            && node2 == edge.node2
+            && Objects.equals(text, edge.text)
+            && color == edge.color;
     }
 }

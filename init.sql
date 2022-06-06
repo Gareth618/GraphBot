@@ -1,0 +1,4 @@
+CREATE TABLE graphs (
+    id SERIAL PRIMARY KEY,
+    json VARCHAR(10000) NOT NULL
+);

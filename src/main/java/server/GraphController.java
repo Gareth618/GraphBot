@@ -3,29 +3,38 @@ package server;
 import model.Edge;
 import model.Graph;
 import model.Node;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/graphs")
+@RequestMapping("/api")
 public class GraphController {
-    private List<Graph> graphs;
+    private final GraphRepo graphRepo;
 
     public GraphController() {
-        graphs = new ArrayList<>();
+        graphRepo = new GraphRepo();
         final Graph graph = new Graph();
         graph.getNodes().add(new Node(314, 618));
         graph.getNodes().add(new Node(618, 314));
         graph.getEdges().add(new Edge(0, 1));
-        graphs.add(graph);
+        graphRepo.create(graph);
     }
 
-    @GetMapping
+    @GetMapping("/graphs")
     public List<Graph> getGraphs() {
-        return graphs;
+        return graphRepo.findAll();
+    }
+
+    @PostMapping(value = "/graphs", consumes="application/json")
+    public ResponseEntity<String> addGraph(@RequestBody Graph graph) {
+        graphRepo.create(graph);
+        return new ResponseEntity<>("graph created successfully", HttpStatus.CREATED);
     }
 }

@@ -51,12 +51,14 @@ Bot-ul va converti singur grafurile în poze:
 
 ```
 {
-  id: int // opțional
+  id: int
   directed: bool
   nodes: [
     {
-      text: string // textul de afișat sub numărul nodului
-      color: string // alegem vreo trei culori, mai mult pentru algoritmi
+      x: int
+      y: int
+      text: string
+      color: string
     }
   ]
   edges: [

@@ -18,6 +18,7 @@ public class DrawingPanel extends JPanel {
     public DrawingPanel(App app) {
         this.app = app;
         setSize(400, 400);
+        setLocation(0, 0);
 
         addMouseListener(new MouseAdapter() {
             private void addNode(int x1, int y1) {
@@ -72,7 +73,10 @@ public class DrawingPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        setSize(400, 400);
+        paintGraph(g2d);
+    }
+
+    public void paintGraph(Graphics2D g2d) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.WHITE.getColor());
         g2d.fillRect(0, 0, 400, 400);
@@ -97,7 +101,7 @@ public class DrawingPanel extends JPanel {
             g2d.drawOval(x - R, y - R, 2 * R, 2 * R);
             g2d.setColor(Color.BLACK.getColor());
             g2d.setFont(new Font("Monospaced", Font.BOLD, 20));
-            int w = g2d.getFontMetrics().stringWidth(String.valueOf(i));
+            int w = g2d.getFontMetrics().stringWidth(String.valueOf(i + 1));
             g2d.drawString(String.valueOf(i + 1), x - w / 2, y + 7);
         }
     }

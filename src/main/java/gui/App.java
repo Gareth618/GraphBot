@@ -17,9 +17,10 @@ public class App extends JFrame {
     public App() {
         super("GraphBot");
         drawingPanel = new DrawingPanel(this);
-        controlPanel = new ControlPanel();
-        add(drawingPanel, BorderLayout.WEST);
-        add(controlPanel, BorderLayout.EAST);
+        controlPanel = new ControlPanel(this);
+        setLayout(null);
+        add(drawingPanel);
+        add(controlPanel);
         pack();
         graph = new Graph();
     }
@@ -28,12 +29,22 @@ public class App extends JFrame {
         return graph;
     }
 
+    public DrawingPanel getDrawingPanel() {
+        return drawingPanel;
+    }
+
+    public ControlPanel getControlPanel() {
+        return controlPanel;
+    }
+
     public void launch() {
+        setLocation(0, 0);
         setSize(600, 436);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
+        setLayout(null);
         setResizable(false);
-        setLayout(new BorderLayout());
         setVisible(true);
     }
 }

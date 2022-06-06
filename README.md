@@ -9,7 +9,7 @@ Aplicația este compusă din trei module principale:
 
 1. **aplicație grafică**: Aici putem desena grafuri care apoi să fie stocate în baza de date sau să fie exportate în format PNG, SVG sau TIKZ.
 2. **bot discord**: Aici putem selecta un graf din baza de date pe care mai apoi să rulăm diverși algoritmi.
-3. **server spring**: El se ocupă de rularea algoritmilor pe grafuri și de transformarea acestora în poze pentru discord, oferind API-uri pentru celelalte două module.
+3. **spring spring**: El se ocupă de rularea algoritmilor pe grafuri și de transformarea acestora în poze pentru discord, oferind API-uri pentru celelalte două module.
 
 ## 🎨 Aplicația grafică
 

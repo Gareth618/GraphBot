@@ -1,6 +1,7 @@
-package server;
+package spring;
 
 import algo.DFS;
+import db.GraphRepo;
 import model.Graph;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class GraphController {
+public class SpringController {
     private final GraphRepo graphRepo = new GraphRepo();
 
     @GetMapping("/graphs")

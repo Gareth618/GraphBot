@@ -1,6 +1,5 @@
-package server;
+package db;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Graph;
 
 import javax.persistence.Column;
@@ -20,8 +19,6 @@ import java.io.Serializable;
     @NamedQuery(name = "GraphJSON.findById", query = "SELECT g FROM GraphJSON g WHERE g.id = :id")
 })
 public class GraphJSON implements Serializable {
-    private static final ObjectMapper om = new ObjectMapper();
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,14 +34,8 @@ public class GraphJSON implements Serializable {
     }
 
     public Graph toGraph() {
-        Graph graph;
-        try {
-            graph = om.readValue(json, Graph.class);
-            graph.setId(id);
-        }
-        catch (final Exception exc) {
-            graph = new Graph();
-        }
+        final Graph graph = Converter.toGraph(json);
+        graph.setId(id);
         return graph;
     }
 

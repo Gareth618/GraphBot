@@ -1,6 +1,6 @@
 package gui;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import spring.SpringClient;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +9,12 @@ import java.io.IOException;
 
 public class ControlPanel extends JPanel {
     private final App app;
+    private final SpringClient client;
 
     public ControlPanel(App app) {
         this.app = app;
+        client = new SpringClient();
+
         setSize(200, 400);
         setLocation(400, 0);
         setLayout(new GridLayout(5, 1));
@@ -38,8 +41,8 @@ public class ControlPanel extends JPanel {
 
     private void onExportPNGClicked(ActionEvent e) {
         try {
-            String path = System.getProperty("user.home") + "/Downloads/graph_" + app.getGraph().getId() + ".png";
-            Util.exportPNG(app.getDrawingPanel(), path);
+            String path = System.getProperty("user.home") + "/Downloads/graph-" + app.getGraph().getId() + ".png";
+            ExportUtil.exportPNG(app.getDrawingPanel(), path);
             System.out.println("Graph " + app.getGraph().getId() + " exported as PNG");
         } catch (IOException ex) {
             System.err.println("Wrong path");
@@ -48,8 +51,8 @@ public class ControlPanel extends JPanel {
 
     private void onExportSVGClicked(ActionEvent e) {
         try {
-            String path = System.getProperty("user.home") + "/Downloads/graph_" + app.getGraph().getId() + ".svg";
-            Util.exportSVG(app.getDrawingPanel(), path);
+            String path = System.getProperty("user.home") + "/Downloads/graph-" + app.getGraph().getId() + ".svg";
+            ExportUtil.exportSVG(app.getDrawingPanel(), path);
             System.out.println("Graph " + app.getGraph().getId() + " exported as SVG");
         } catch (Exception ex) {
             System.err.println("Wrong path");
@@ -61,12 +64,8 @@ public class ControlPanel extends JPanel {
     }
 
     private void onSaveGraphClicked(ActionEvent e) {
-        try {
-            Util.saveGraph(app.getGraph(), "http://localhost:8000/api/graphs");
-            System.out.println("Graph " + app.getGraph().getId() + " saved in the database");
-        } catch (JsonProcessingException ex) {
-            ex.printStackTrace();
-        }
+        client.saveGraph(app.getGraph());
+        System.out.println("Graph " + app.getGraph().getId() + " saved in the database");
     }
 
     private void onNewGraphClicked(ActionEvent e) {

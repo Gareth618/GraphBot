@@ -1,6 +1,5 @@
-package server;
+package db;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Graph;
 
 import javax.persistence.EntityManager;
@@ -9,14 +8,10 @@ import java.util.List;
 
 public class GraphRepo {
     private final EntityManager em = Persistence.createEntityManagerFactory("GraphBot").createEntityManager();
-    private final ObjectMapper om = new ObjectMapper();
 
     public void create(Graph graph) {
         em.getTransaction().begin();
-        GraphJSON graphJSON;
-        try { graphJSON = new GraphJSON(om.writeValueAsString(graph)); }
-        catch (final Exception exc) { graphJSON = new GraphJSON(); }
-        em.persist(graphJSON);
+        em.persist(new GraphJSON(Converter.toJSON(graph)));
         em.getTransaction().commit();
     }
 

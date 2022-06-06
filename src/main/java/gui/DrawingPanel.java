@@ -7,8 +7,10 @@ import model.Node;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 
 public class DrawingPanel extends JPanel {
     private final App app;
@@ -54,6 +56,9 @@ public class DrawingPanel extends JPanel {
                             if (!app.getGraph().getEdges().contains(edge)) {
                                 app.getGraph().getEdges().add(edge);
                             }
+                            else {
+                                showTextField(edge);
+                            }
                             selectedNode = -1;
                         }
                     }
@@ -92,6 +97,13 @@ public class DrawingPanel extends JPanel {
             int x2 = graph.getNodes().get(edge.getNode2()).getX();
             int y2 = graph.getNodes().get(edge.getNode2()).getY();
             g2d.drawLine(x1, y1, x2, y2);
+            if (!edge.getText().equals("")) {
+                AffineTransform transform = new AffineTransform();
+                transform.setToRotation(((double) y2 - y1) / ((double) x2 - x1));
+                g2d.setFont(new Font("Monospaced", Font.BOLD, 16).deriveFont(transform));
+                int w = g2d.getFontMetrics().stringWidth(String.valueOf(edge.getText()));
+                g2d.drawString(String.valueOf(edge.getText()), (x1 + x2 - w) / 2, (y1 + y2 + 16) / 2);
+            }
         }
         for (int i = 0; i < graph.getNodes().size(); i++) {
             Node node = graph.getNodes().get(i);
@@ -106,5 +118,30 @@ public class DrawingPanel extends JPanel {
             int w = g2d.getFontMetrics().stringWidth(String.valueOf(i + 1));
             g2d.drawString(String.valueOf(i + 1), x - w / 2, y + 7);
         }
+    }
+
+    private void showTextField(Edge edge) {
+        JFrame frame = new JFrame("Edge value");
+        JTextField textField = new JTextField();
+        JButton submit = new JButton("Submit");
+
+        frame.add(textField, BorderLayout.NORTH);
+        frame.add(submit, BorderLayout.SOUTH);
+        frame.pack();
+
+        submit.addActionListener((ActionEvent e) -> {
+            String text = textField.getText();
+            if (!text.equals("")) {
+                int i = app.getGraph().getEdges().indexOf(edge);
+                app.getGraph().getEdges().get(i).setText(text);
+            }
+            frame.dispose();
+            repaint();
+        });
+
+        frame.setSize(260, 100);
+        frame.setLayout(new GridLayout(2, 1));
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 }

@@ -32,8 +32,8 @@ public class App extends JFrame {
         return drawingPanel;
     }
 
-    public ControlPanel getControlPanel() {
-        return controlPanel;
+    public void setGraph(Graph graph) {
+        this.graph = graph;
     }
 
     public void launch() {

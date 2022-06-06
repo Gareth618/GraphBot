@@ -1,5 +1,6 @@
 package gui;
 
+import model.Graph;
 import spring.SpringClient;
 
 import javax.swing.*;
@@ -17,24 +18,21 @@ public class ControlPanel extends JPanel {
 
         setSize(200, 400);
         setLocation(400, 0);
-        setLayout(new GridLayout(5, 1));
+        setLayout(new GridLayout(4, 1));
 
         JButton exportPNG = new JButton("Export as PNG");
         JButton exportSVG = new JButton("Export as SVG");
-        JButton exportTIKZ = new JButton("Export as TIKZ");
         JButton saveGraph = new JButton("Save");
         JButton newGraph = new JButton("New");
 
         add(exportPNG);
         add(exportSVG);
-        add(exportTIKZ);
         add(saveGraph);
         add(newGraph);
         app.pack();
 
         exportPNG.addActionListener(this::onExportPNGClicked);
         exportSVG.addActionListener(this::onExportSVGClicked);
-        exportTIKZ.addActionListener(this::onExportTIKZClicked);
         saveGraph.addActionListener(this::onSaveGraphClicked);
         newGraph.addActionListener(this::onNewGraphClicked);
     }
@@ -59,16 +57,14 @@ public class ControlPanel extends JPanel {
         }
     }
 
-    private void onExportTIKZClicked(ActionEvent e) {
-
-    }
-
     private void onSaveGraphClicked(ActionEvent e) {
         client.saveGraph(app.getGraph());
         System.out.println("Graph " + app.getGraph().getId() + " saved in the database");
     }
 
     private void onNewGraphClicked(ActionEvent e) {
-
+        app.setGraph(new Graph());
+        app.getDrawingPanel().repaint();
+        System.out.println("New graph");
     }
 }

@@ -83,12 +83,15 @@ public class DrawingPanel extends JPanel {
     }
 
     public void paintGraph(Graphics2D g2d) {
+        paintGraph(g2d, app.getGraph(), selectedNode);
+    }
+
+    public static void paintGraph(Graphics2D g2d, Graph graph, int selectedNode) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.WHITE.getColor());
         g2d.fillRect(0, 0, 400, 400);
         g2d.setStroke(new BasicStroke(3));
 
-        final Graph graph = app.getGraph();
         for (Edge edge : graph.getEdges()) {
             g2d.setColor(edge.getColor().getColor());
             int x1 = graph.getNodes().get(edge.getNode1()).getX();
@@ -97,14 +100,14 @@ public class DrawingPanel extends JPanel {
             int y2 = graph.getNodes().get(edge.getNode2()).getY();
             g2d.drawLine(x1, y1, x2, y2);
             if (!edge.getText().equals("")) {
-                g2d.setFont(new Font("Monospaced", Font.BOLD, 16));
+                g2d.setFont(new Font("Consolas", Font.BOLD, 16));
                 int x = (x1 + x2 - g2d.getFontMetrics().stringWidth(edge.getText())) / 2;
                 int y = (y1 + y2 + g2d.getFontMetrics().getHeight() / 2) / 2;
                 Rectangle rectangle = new Rectangle(
-                        x - 3,
-                        y - g2d.getFontMetrics().getHeight() + 6,
-                        g2d.getFontMetrics().stringWidth(edge.getText()) + 6,
-                        g2d.getFontMetrics().getHeight()
+                    x - 3,
+                    y - g2d.getFontMetrics().getHeight() + 4,
+                    g2d.getFontMetrics().stringWidth(edge.getText()) + 6,
+                    g2d.getFontMetrics().getHeight()
                 );
                 g2d.setColor(Color.WHITE.getColor());
                 g2d.fill(rectangle);
@@ -113,6 +116,7 @@ public class DrawingPanel extends JPanel {
                 g2d.drawString(edge.getText(), x, y);
             }
         }
+
         for (int i = 0; i < graph.getNodes().size(); i++) {
             Node node = graph.getNodes().get(i);
             int x = node.getX();
@@ -137,15 +141,20 @@ public class DrawingPanel extends JPanel {
         frame.add(submit, BorderLayout.SOUTH);
         frame.pack();
 
-        submit.addActionListener((ActionEvent e) -> {
-            String text = textField.getText();
-            if (!text.equals("")) {
-                int i = app.getGraph().getEdges().indexOf(edge);
-                app.getGraph().getEdges().get(i).setText(text);
+        class Callback {
+            public void function() {
+                String text = textField.getText();
+                if (!text.equals("")) {
+                    int i = app.getGraph().getEdges().indexOf(edge);
+                    app.getGraph().getEdges().get(i).setText(text);
+                }
+                frame.dispose();
+                repaint();
             }
-            frame.dispose();
-            repaint();
-        });
+        }
+
+        textField.addActionListener((ActionEvent e) -> new Callback().function());
+        submit.addActionListener((ActionEvent e) -> new Callback().function());
 
         frame.setSize(260, 100);
         frame.setLayout(new GridLayout(2, 1));

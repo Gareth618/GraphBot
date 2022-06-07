@@ -11,6 +11,10 @@ Aplicația este compusă din trei module principale:
 2. **bot discord**: Aici putem selecta un graf din baza de date pe care mai apoi să rulăm diverși algoritmi.
 3. **spring spring**: El se ocupă de rularea algoritmilor pe grafuri și de transformarea acestora în poze pentru discord, oferind API-uri pentru celelalte două module.
 
+![gui](demo/gui.png)
+![bot](demo/bot-1.png)
+![bot](demo/bot-2.png)
+
 ## 🎨 Aplicația grafică
 
 În stânga avem un panel pătratic în care putem desena un graf astfel:

@@ -7,8 +7,8 @@ import model.Graph;
 import java.util.Comparator;
 import java.util.List;
 
-public class Kosaraju extends Algorithm {
-    public Kosaraju(Graph graph) {
+public class Kruskal extends Algorithm {
+    public Kruskal(Graph graph) {
         super(graph);
     }
 

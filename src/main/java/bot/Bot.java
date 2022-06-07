@@ -81,8 +81,8 @@ public class Bot extends ListenerAdapter {
                         currentFrameId = 1;
                         sendCurrentFrame(channel);
                     }
-                    else if (arg.equals("kosaraju")) {
-                        frames = client.runAlgorithm("kosaraju", selectedGraphId, -1);
+                    else if (arg.equals("kruskal")) {
+                        frames = client.runAlgorithm("kruskal", selectedGraphId, -1);
                         currentFrameId = 1;
                         sendCurrentFrame(channel);
                     }

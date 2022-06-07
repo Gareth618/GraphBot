@@ -1,5 +1,6 @@
 package spring;
 
+import algo.BFS;
 import algo.DFS;
 import db.GraphRepo;
 import model.Graph;
@@ -35,5 +36,11 @@ public class SpringController {
     public List<Graph> runDFS(@PathVariable int id, @RequestParam int source) {
         final Graph graph = graphRepo.findById(id);
         return new DFS(graph, source).run();
+    }
+
+    @GetMapping("/algo/bfs/{id}")
+    public List<Graph> runBFS(@PathVariable int id, @RequestParam int source) {
+        final Graph graph = graphRepo.findById(id);
+        return new BFS(graph, source).run();
     }
 }

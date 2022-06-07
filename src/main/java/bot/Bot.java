@@ -75,6 +75,12 @@ public class Bot extends ListenerAdapter {
                         currentFrameId = 1;
                         sendCurrentFrame(channel);
                     }
+                    else if (arg.startsWith("bfs from ")) {
+                        final int source = Integer.parseInt(arg.substring("bfs from ".length()));
+                        frames = client.runAlgorithm("bfs", selectedGraphId, source - 1);
+                        currentFrameId = 1;
+                        sendCurrentFrame(channel);
+                    }
                     else
                         channel.sendMessage("unknown algorithm :pleading_face:").queue();
                     return;

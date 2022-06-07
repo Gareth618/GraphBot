@@ -2,6 +2,7 @@ package spring;
 
 import algo.BFS;
 import algo.DFS;
+import algo.Kosaraju;
 import db.GraphRepo;
 import model.Graph;
 import org.springframework.http.HttpStatus;
@@ -42,5 +43,11 @@ public class SpringController {
     public List<Graph> runBFS(@PathVariable int id, @RequestParam int source) {
         final Graph graph = graphRepo.findById(id);
         return new BFS(graph, source).run();
+    }
+
+    @GetMapping("/algo/kosaraju/{id}")
+    public List<Graph> runKosaraju(@PathVariable int id) {
+        final Graph graph = graphRepo.findById(id);
+        return new Kosaraju(graph).run();
     }
 }

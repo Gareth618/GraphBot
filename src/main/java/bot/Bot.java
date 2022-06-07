@@ -81,6 +81,11 @@ public class Bot extends ListenerAdapter {
                         currentFrameId = 1;
                         sendCurrentFrame(channel);
                     }
+                    else if (arg.equals("kosaraju")) {
+                        frames = client.runAlgorithm("kosaraju", selectedGraphId, -1);
+                        currentFrameId = 1;
+                        sendCurrentFrame(channel);
+                    }
                     else
                         channel.sendMessage("unknown algorithm :pleading_face:").queue();
                     return;
@@ -116,12 +121,12 @@ public class Bot extends ListenerAdapter {
         }
         if (event.getMessageId().equals(selectFrameMessageId)) {
             final String emoji = event.getReactionEmote().getEmoji();
-            if (emoji.equals("⏪")) {
+            if (emoji.equals("⏪") && currentFrameId > 1) {
                 currentFrameId = 1;
                 event.getChannel().deleteMessageById(selectFrameMessageId).queue();
                 sendCurrentFrame(event.getChannel());
             }
-            else if (emoji.equals("⏩")) {
+            else if (emoji.equals("⏩") && currentFrameId < frames.size()) {
                 currentFrameId = frames.size();
                 event.getChannel().deleteMessageById(selectFrameMessageId).queue();
                 sendCurrentFrame(event.getChannel());

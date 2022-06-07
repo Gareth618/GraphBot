@@ -24,7 +24,7 @@ Aplicația este compusă din trei module principale:
 
 ## 🤖 Bot-ul pentru Discord
 
-Comenzile încep cu `$ spațiu` și sunt *case insensitive*:
+Comenzile încep cu `$ spațiu`:
 
 - `select graph`: Selectează un graf din baza de date pentru a lucra cu el.
     - ⬅️ 🆗 ➡️

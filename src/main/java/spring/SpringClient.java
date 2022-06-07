@@ -41,4 +41,17 @@ public class SpringClient {
             String.class
         );
     }
+
+    public List<Graph> runAlgorithm(String algorithm, int graphId, int arg) {
+        final RestTemplate template = new RestTemplate();
+        final HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        ResponseEntity<List<Graph>> response = template.exchange(
+            "http://localhost:8000/api/algo/" + algorithm + "/" + graphId + (arg == -1 ? "" : "?source=" + arg),
+            HttpMethod.GET,
+            new HttpEntity<>(headers),
+            new ParameterizedTypeReference<>() { }
+        );
+        return response.getBody();
+    }
 }

@@ -23,7 +23,7 @@ public class Bot extends ListenerAdapter {
     public static void main(String[] args) {
         try {
             final JDA jda = JDABuilder
-                .createDefault("OTgzNDE1NjQyMDcxOTA0MzQ3.GeeKUi.4ac4awF3I-w8Um6oyZAQ7Asr1Z76Uu2xLuPEIg")
+                .createDefault("OTgzNDE1NjQyMDcxOTA0MzQ3.GB8lBl.-qXIu1VE918Pq5heEdFpsuVEGl4c2FUIyQzWBY")
                 .addEventListeners(new Bot())
                 .build();
             jda.awaitReady();

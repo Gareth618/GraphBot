@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 
 public class DrawingPanel extends JPanel {
     private final App app;
@@ -98,11 +97,20 @@ public class DrawingPanel extends JPanel {
             int y2 = graph.getNodes().get(edge.getNode2()).getY();
             g2d.drawLine(x1, y1, x2, y2);
             if (!edge.getText().equals("")) {
-                AffineTransform transform = new AffineTransform();
-                transform.setToRotation(((double) y2 - y1) / ((double) x2 - x1));
-                g2d.setFont(new Font("Monospaced", Font.BOLD, 16).deriveFont(transform));
-                int w = g2d.getFontMetrics().stringWidth(String.valueOf(edge.getText()));
-                g2d.drawString(String.valueOf(edge.getText()), (x1 + x2 - w) / 2, (y1 + y2 + 16) / 2);
+                g2d.setFont(new Font("Monospaced", Font.BOLD, 16));
+                int x = (x1 + x2 - g2d.getFontMetrics().stringWidth(edge.getText())) / 2;
+                int y = (y1 + y2 + g2d.getFontMetrics().getHeight() / 2) / 2;
+                Rectangle rectangle = new Rectangle(
+                        x - 3,
+                        y - g2d.getFontMetrics().getHeight() + 6,
+                        g2d.getFontMetrics().stringWidth(edge.getText()) + 6,
+                        g2d.getFontMetrics().getHeight()
+                );
+                g2d.setColor(Color.WHITE.getColor());
+                g2d.fill(rectangle);
+                g2d.setColor(edge.getColor().getColor());
+                g2d.draw(rectangle);
+                g2d.drawString(edge.getText(), x, y);
             }
         }
         for (int i = 0; i < graph.getNodes().size(); i++) {

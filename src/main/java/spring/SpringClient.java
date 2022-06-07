@@ -1,6 +1,5 @@
 package spring;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import db.Converter;
 import model.Graph;
 import org.springframework.core.ParameterizedTypeReference;

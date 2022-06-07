@@ -14,9 +14,14 @@ import spring.SpringClient;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 
 public class Bot extends ListenerAdapter {
+    private int currentGraphId = -1;
+    private int selectedGraphId = -1;
     private List<Graph> graphs = null;
+    private String selectGraphMessageId = "";
+
     private final ImageDrawer drawer = new ImageDrawer();
     private final SpringClient client = new SpringClient();
 
@@ -43,23 +48,13 @@ public class Bot extends ListenerAdapter {
             final MessageChannel channel = event.getChannel();
             if (request.startsWith("$ ")) {
                 final String content = request.substring("$ ".length());
-                if (content.startsWith("select graph ")) {
+                if (content.equals("select graph")) {
                     graphs = client.getGraphs();
                     if (graphs.isEmpty())
-                        channel
-                            .sendMessage("no graphs to choose from :pleading_face:")
-                            .queue();
+                        channel.sendMessage("no graphs to choose from :pleading_face:").queue();
                     else {
-                        final int id = Integer.parseInt(content.substring("select graph ".length()));
-                        drawer.save(graphs.get(id));
-                        channel
-                            .sendMessage("graph `" + id + "` from `" + graphs.size() + "`")
-                            .addFile(new File("image.png"))
-                            .queue(response -> {
-                                response.addReaction("⬅️").queue();
-                                response.addReaction("\uD83C\uDD97").queue();
-                                response.addReaction("➡️").queue();
-                            });
+                        currentGraphId = 1;
+                        sendCurrentGraph(channel);
                     }
                     return;
                 }
@@ -70,6 +65,38 @@ public class Bot extends ListenerAdapter {
 
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
-        System.out.println(event);
+        if (Objects.requireNonNull(event.getUser()).isBot())
+            return;
+        if (event.getMessageId().equals(selectGraphMessageId)) {
+            final String emoji = event.getReactionEmote().getEmoji();
+            if (emoji.equals("⬅️") && currentGraphId > 1) {
+                currentGraphId--;
+                event.getChannel().deleteMessageById(selectGraphMessageId).queue();
+                sendCurrentGraph(event.getChannel());
+            }
+            else if (emoji.equals("➡️") && currentGraphId < graphs.size()) {
+                currentGraphId++;
+                event.getChannel().deleteMessageById(selectGraphMessageId).queue();
+                sendCurrentGraph(event.getChannel());
+            }
+            else if (emoji.equals("🆗")) {
+                selectedGraphId = currentGraphId;
+                event.getChannel().deleteMessageById(selectGraphMessageId).queue();
+                event.getChannel().sendMessage("`" + Objects.requireNonNull(event.getMember()).getEffectiveName() + "` selected graph `" + currentGraphId + "` :partying_face:").queue();
+            }
+        }
+    }
+
+    public void sendCurrentGraph(MessageChannel channel) {
+        drawer.save(graphs.get(currentGraphId - 1));
+        channel
+            .sendMessage("graph `" + currentGraphId + "` of `" + graphs.size() + "`")
+            .addFile(new File("image.png"))
+            .queue(response -> {
+                response.addReaction("⬅️").queue();
+                response.addReaction("🆗").queue();
+                response.addReaction("➡️").queue();
+                selectGraphMessageId = response.getId();
+            });
     }
 }

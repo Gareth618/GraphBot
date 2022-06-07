@@ -6,6 +6,7 @@ import model.Graph;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +31,8 @@ public class SpringController {
         return new ResponseEntity<>("graph created successfully", HttpStatus.CREATED);
     }
 
-    @GetMapping("/algo/dfs")
-    public List<Graph> runDFS(@RequestParam int id, @RequestParam int source) {
+    @GetMapping("/algo/dfs/{id}")
+    public List<Graph> runDFS(@PathVariable int id, @RequestParam int source) {
         final Graph graph = graphRepo.findById(id);
         return new DFS(graph, source).run();
     }

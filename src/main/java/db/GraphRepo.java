@@ -25,9 +25,12 @@ public class GraphRepo {
     }
 
     public Graph findById(int id) {
-        return ((GraphJSON) em
+        em.getTransaction().begin();
+        final GraphJSON graphJSON = (GraphJSON) em
             .createNamedQuery("GraphJSON.findById")
             .setParameter("id", id)
-            .getSingleResult()).toGraph();
+            .getSingleResult();
+        em.getTransaction().commit();
+        return graphJSON.toGraph();
     }
 }

@@ -61,10 +61,12 @@ Bot-ul va converti singur grafurile în poze:
     }
   ]
   edges: [
-    node1: int
-    node2: int
-    text: string
-    color: enum
+    {
+      node1: int
+      node2: int
+      text: string
+      color: enum
+    }
   ]
 }
 ```

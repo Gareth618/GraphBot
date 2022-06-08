@@ -31,9 +31,13 @@ public class Bot extends ListenerAdapter {
     private final SpringClient client = new SpringClient();
 
     public static void main(String[] args) {
+        if (args.length == 0) {
+            System.err.println("no discord token provided");
+            return;
+        }
         try {
             final JDA jda = JDABuilder
-                .createDefault("OTgzNDE1NjQyMDcxOTA0MzQ3.GB8lBl.-qXIu1VE918Pq5heEdFpsuVEGl4c2FUIyQzWBY")
+                .createDefault(args[0])
                 .addEventListeners(new Bot())
                 .build();
             jda.awaitReady();
